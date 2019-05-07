@@ -4,18 +4,17 @@
 # Copyright (c) 2012-2019 Snowflake Computing Inc. All right reserved.
 #
 import os
-
 import pytest
-import pathlib
 
-from snowflake.connector.compat import IS_WINDOWS
+from snowflake.connector.compat import PY2
 
 
-@pytest.mark.skipif(not IS_WINDOWS, reason="windows only")
+@pytest.mark.skipif(PY2, reason="Python3.4 or more")
 def test_abc(conn_cnx, tmpdir, db_parameters):
     """
     PUT a file on Windows using the URI and Windows path
     """
+    import pathlib
     tmp_dir = str(tmpdir.mkdir('data'))
     test_data = os.path.join(tmp_dir, 'data.txt')
     with open(test_data, 'w') as f:
